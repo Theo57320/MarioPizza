@@ -8,10 +8,10 @@ class ClassLoader extends AbstractClassLoader{
         }
 
         public function getFilename(string $classname): string{
-            $resultat="";
-            $resultat = str_replace("\\",DIRECTORY_SEPARATOR,$classname);
-            $resultat = $resultat.".php";
-            return $resultat;
+            $result="";
+            $result = str_replace("\\",DIRECTORY_SEPARATOR,$classname);
+            $result = $result.".php";
+            return $result;
         }
 
         public function makePath(string $filename): string{
@@ -20,10 +20,10 @@ class ClassLoader extends AbstractClassLoader{
 
         public function loadClass(string $classname){
            $var = $this->getFilename($classname) ;
-           $chemin_complet=$this->makePath($var);
+           $full_path=$this->makePath($var);
 
-           if(file_exists($chemin_complet)){
-               require_once $chemin_complet;
+           if(file_exists($full_path)){
+               require_once $full_path;
            }
         }
     }
