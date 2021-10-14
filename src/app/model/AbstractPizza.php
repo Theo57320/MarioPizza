@@ -4,7 +4,7 @@ namespace app\model;
 
 Abstract class AbstractPizza
 {
-    protected $type;
+    protected $type,$ingredients=[];
 
     public function __construct($type){
         $this->type = $type;
@@ -21,6 +21,19 @@ Abstract class AbstractPizza
         if (property_exists($this, $property)) {
             return $this->$property;
         }
+    }
+
+    public function addIngredient($ingredient)
+    {
+        array_push($this->ingredients, $ingredient) ;
+    }
+
+    public function listIngredients()
+    {
+        print_r($this->ingredients);
+    }
+    public function removeIngredients($ligne){
+        unset($this->ingredients[$ligne]);
     }
 
 

@@ -4,12 +4,13 @@ namespace app\model;
 
 class Pizza extends AbstractPizza
 {
-    protected $name,$price,$ingrediant;
+    protected $name,$price,$stock;
 
-    public function __construct($type,$name,$price){
+    public function __construct($type='recipe',$name,$price,$stock){
         parent::__construct($type);
         $this->name = $name;
         $this->price = $price;
+        $this->stock = $stock;
     }
 
     public function __toString()
@@ -17,6 +18,12 @@ class Pizza extends AbstractPizza
         return $this->type.", ".$this->name.", ".$this->price."\n";
 
     }
+
+    public function changePizzaPrice($newPrice){
+        $this->price = $newPrice;
+    }
+
+
 
 
 
