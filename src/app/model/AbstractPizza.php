@@ -23,17 +23,24 @@ Abstract class AbstractPizza
         }
     }
 
-    public function addIngredient($ingredient)
-    {
-        array_push($this->ingredients, $ingredient) ;
+    public function addIngredient($ingredient,&$list){
+        array_push($this->ingredients, $ingredient);
+        if ($this->type='recipe'){
+            $list[$this->name]['ingredients']=$this->ingredients;
+        }
     }
+
+
 
     public function listIngredients()
     {
         print_r($this->ingredients);
     }
-    public function removeIngredients($ligne){
+    public function removeIngredients($ligne,&$list){
         unset($this->ingredients[$ligne]);
+        if ($this->type='recipe'){
+            $list[$this->name]['ingredients']=$this->ingredients;
+        }
     }
 
 
