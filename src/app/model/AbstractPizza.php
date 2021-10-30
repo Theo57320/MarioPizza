@@ -26,7 +26,7 @@ Abstract class AbstractPizza
     public function addIngredient($ingredient,&$list){
         array_push($this->ingredients, $ingredient);
         if ($this->type='recipe'){
-            $list[$this->name]['ingredients']=$this->ingredients;
+            ListPizza::setIngredient($list,$this->name,$this->ingredients);
         }
     }
 
@@ -36,10 +36,10 @@ Abstract class AbstractPizza
     {
         print_r($this->ingredients);
     }
-    public function removeIngredients($ligne,&$list){
-        unset($this->ingredients[$ligne]);
+    public function removeIngredients($line,&$list){
+        unset($this->ingredients[$line]);
         if ($this->type='recipe'){
-            $list[$this->name]['ingredients']=$this->ingredients;
+            ListPizza::setIngredient($list,$this->name,$this->ingredients);
         }
     }
 
