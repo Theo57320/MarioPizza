@@ -91,7 +91,7 @@ $Pizza12->addIngredient('onions',$PizzaList);
 $Pizza12->addIngredient('tuna',$PizzaList);
 $Pizza12->addIngredient('cheeses',$PizzaList);
 
-$Pizza13 = new Pizza('recipe','Capre','13,00',8,$PizzaList);
+$Pizza13 = new Pizza('recipe','Capri','13,00',8,$PizzaList);
 $Pizza13->addIngredient('creams',$PizzaList);
 $Pizza13->addIngredient('ham',$PizzaList);
 $Pizza13->addIngredient('mushrooms',$PizzaList);
