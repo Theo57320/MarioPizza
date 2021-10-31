@@ -64,6 +64,7 @@ class ListPizza
             foreach ($val as $PizzaName => $A){
                 if($PizzaName = $name){
                     unset($val[$name]['Ingredients'][$line]);
+//                    echo $val[$name]['Ingredients'][$line];
                 }
             }
         }
