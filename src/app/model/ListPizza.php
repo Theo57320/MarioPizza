@@ -50,6 +50,10 @@ class ListPizza
         $cartList[][$name]=$list[$name];
 
     }
+
+    public function AddCustomToCart(&$cartList, $tmpList){
+        $cartList[]['Custom']=$tmpList;
+    }
     public function SeeCart($cartList){
         print_r($cartList);
 
@@ -77,12 +81,23 @@ class ListPizza
 
     public function calcPriceCart($cartList){
         $s=0;
+        $sc=0;
         foreach ($cartList as $key => $value){
             foreach ($value as $k => $v){
                $s=$s+$v['Price'];
             }
+            foreach ($value['Custom'] as $k => $v){
+                foreach ($v as $line => $array){
+                    $sc=$sc+$array['Price'];
+                }
+
+            }
+
         }
-        return $s."€";
+        if($sc !== 0){
+            $sc=$sc+5;
+        }
+        return $s+$sc."€";
     }
 
     public function viewOrders($ordersList){
@@ -91,14 +106,18 @@ class ListPizza
             foreach ($value as $k => $v){
 //                $result=$result."\n      ".$k;
                 foreach ($v as $prop => $v2){
-                    $result=$result."\n   ".$prop;
+                    $result=$result."\n   ".$prop.":";
                     foreach ($v2['Ingredients'] as $id => $ingredient){
-                        $result=$result."\n     ".$ingredient;
+                        $result=$result."\n     -".$ingredient;
                     }
                 }
             }
         }
         echo $result."\n";
+    }
+
+    public function OrderDone($ordersList,$order){
+        unset($ordersList[$order]);
     }
 
 

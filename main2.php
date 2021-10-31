@@ -2,38 +2,14 @@
 require_once 'src/utils/AbstractClassLoader.php';
 require_once 'src/utils/ClassLoader.php';
 
-
-
 $loader = new \utils\ClassLoader('src');
 $loader->register();
 
 use app\model\Pizza;
 use app\model\PizzaCustom;
-use app\model\Recipe;
 use app\model\ListPizza;
-$pass='$2y$10$XWY2hekXyFLsokyC890q1eBraubGXak2oW8myLJUQM.IfkxTso88O';
-$PizzaList = new ArrayObject();
-$IngredientsList = new ArrayObject();
-$Cart = [];
-$Orders=[];
-$Pizza1 = new Pizza('recipe','Margarita','12.5',40,$PizzaList);
-$Pizza1->addIngredient('tomate',$PizzaList);
-$Pizza1->addIngredient('radis',$PizzaList);
-$Pizza1->addIngredient('blabla',$PizzaList);
-$Pizza1->addIngredient('riz',$PizzaList);
-$Pizza1->addIngredient('nutella',$PizzaList);
-$Pizza2 = new Pizza('recipe','a','12.5',40,$PizzaList);
-$Pizza2->addIngredient('tomate',$PizzaList);
-$Pizza2->addIngredient('radis',$PizzaList);
-$Pizza2->addIngredient('riz',$PizzaList);
-$Pizza2->addIngredient('nutella',$PizzaList);
-
-//print_r($PizzaList) ;
-
-
-//$listPizza->ListPizzasNames();
-//$PizzaList->getList;
-
+use app\model\Ingredients;
+include 'setup.php';
 
 start:
 echo"\nWelcome to MARIO PIZZA ! \n";
@@ -44,6 +20,60 @@ $number = (int)readline('Enter the number please :');
 switch($number){
     case 1:
         echo ("\nWhat are the ingredients you want for your personalized pizza\n");
+        ListPizza::ListPizzasNames($IngredientsList);
+        $ingredient_choice1=readline('Type the name of the ingrediant please (min 3):');
+        $ingredient_choice2=readline('Type the name of the ingrediant please (min 3):');
+        $ingredient_choice3=readline('Type the name of the ingrediant please (min 3):');
+        $tmp=[];
+        foreach ($IngredientsList as $key => $val){
+            if(strtolower($ingredient_choice1) == strtolower($key)){
+                ListPizza::AddToCart($IngredientsList,$tmp,$key);
+            }
+        }
+        foreach ($IngredientsList as $key => $val){
+            if(strtolower($ingredient_choice2) == strtolower($key)){
+                ListPizza::AddToCart($IngredientsList,$tmp,$key);
+            }
+        }
+        foreach ($IngredientsList as $key => $val){
+            if(strtolower($ingredient_choice3) == strtolower($key)){
+                ListPizza::AddToCart($IngredientsList,$tmp,$key);
+            }
+        }
+        print_r ($tmp);
+        more_ingredient_custom:
+        echo "\n More ingrediants ?\n";
+        echo("\nEnter 1 : -Yes\nEnter 2 : -No, Add to cart\n\n");
+        switch ((int)readline('Enter the number please :')){
+            case 1:
+                $ingredient_choice=readline('Type the name of the ingrediant please:');
+                foreach ($IngredientsList as $key => $val){
+                    if(strtolower($ingredient_choice) == strtolower($key)){
+                        ListPizza::AddToCart($IngredientsList,$tmp,$key);
+                    }
+                }
+                goto more_ingredient_custom;
+            case 2:
+                ListPizza::AddCustomToCart($Cart,$tmp);
+
+                $tmp=[];
+                print_r($Cart);
+                echo "Your Pizza as been added to cart\n";
+                echo "Do you want another pizza?\n";
+                echo("\nEnter 1 : -Yes\nEnter 2 : -No, I want to finalize my order \n\n");
+                switch (readline('Enter the number please :')){
+                    case 1:
+                        goto start;
+                        break;
+                    case 2:
+                        $Orders[]=$Cart;
+                        echo "Thank you for your order,you need to pay ".ListPizza::calcPriceCart($Cart)." when receiving your order\n";
+                        $Cart=[];
+                        goto start;
+                        break;
+                }
+        }
+
         break;
 
     case 2:
@@ -124,6 +154,18 @@ switch($number){
                     switch (readline('Enter a number please :')){
                         case 1:
                             ListPizza::viewOrders($Orders);
+                            echo "\n One order done ?\n";
+                            echo("\nEnter 1 : -Yes\nEnter 2 : -No\n\n");
+                            switch (readline('Enter a number please :')){
+                                case 1:
+                                    $order_line = readline("Enter the order's number please :");
+                                    echo $order_line;
+                                    ListPizza::OrderDone($Orders,$order_line);
+                                    goto admin;
+                                case 2:
+                                    goto admin;
+                            }
+
                             break;
                         case 2:
                             echo "There is the list ofs pizzas Recipes:\n\n";

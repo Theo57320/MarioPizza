@@ -1,5 +1,21 @@
 <?php
+require_once 'src/utils/AbstractClassLoader.php';
+require_once 'src/utils/ClassLoader.php';
 
+
+
+$loader = new \utils\ClassLoader('src');
+$loader->register();
+
+use app\model\Pizza;
+use app\model\PizzaCustom;
+use app\model\ListPizza;
+use app\model\Ingredients;
+$pass='$2y$10$XWY2hekXyFLsokyC890q1eBraubGXak2oW8myLJUQM.IfkxTso88O';
+$PizzaList = new ArrayObject();
+$IngredientsList = new ArrayObject();
+$Cart = [];
+$Orders=[];
 $Pizza1 = new Pizza('recipe','Margarita','9,00',40,$PizzaList);
 $Pizza1->addIngredient('tomato',$PizzaList);
 $Pizza1->addIngredient('ham',$PizzaList);
@@ -101,4 +117,14 @@ $Pizza13->addIngredient('anchovy',$PizzaList);
 $Pizza13->addIngredient('peppers',$PizzaList);
 $Pizza13->addIngredient('cheeses',$PizzaList);
 
-
+//Ingredients
+$Tomato = new Ingredients('tomato','1','20',$IngredientsList);
+$Cream = new Ingredients('cream','1','20',$IngredientsList);
+$Bacon = new Ingredients('bacon','1.5','20',$IngredientsList);
+$mushrooms = new Ingredients('mushrooms','1.5','20',$IngredientsList);
+$chorizo = new Ingredients('chorizo','1.5','20',$IngredientsList);
+$anchovy = new Ingredients('anchovy','1.5','20',$IngredientsList);
+$tuna = new Ingredients('tuna','1.5','20',$IngredientsList);
+$ham = new Ingredients('ham','1.5','20',$IngredientsList);
+$cheeses = new Ingredients('cheeses','1.5','20',$IngredientsList);
+$dill = new Ingredients('dill','1.5','20',$IngredientsList);
