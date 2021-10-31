@@ -16,6 +16,11 @@ class ListPizza
             echo "".$key." ".$val['Price']."€\n";
         }
     }
+    public function ListPizzasStock($list){
+        foreach ($list as $key => $val){
+            echo "".$key." ".$val['Stock']."\n";
+        }
+    }
 
 
     public function setPrice($list,$name,$price){
@@ -68,6 +73,32 @@ class ListPizza
                 }
             }
         }
+    }
+
+    public function calcPriceCart($cartList){
+        $s=0;
+        foreach ($cartList as $key => $value){
+            foreach ($value as $k => $v){
+               $s=$s+$v['Price'];
+            }
+        }
+        return $s."€";
+    }
+
+    public function viewOrders($ordersList){
+        foreach ($ordersList as $key => $value){
+            $result="Order n° ".$key;
+            foreach ($value as $k => $v){
+//                $result=$result."\n      ".$k;
+                foreach ($v as $prop => $v2){
+                    $result=$result."\n   ".$prop;
+                    foreach ($v2['Ingredients'] as $id => $ingredient){
+                        $result=$result."\n     ".$ingredient;
+                    }
+                }
+            }
+        }
+        echo $result."\n";
     }
 
 

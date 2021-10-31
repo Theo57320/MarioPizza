@@ -15,13 +15,14 @@ $pass='$2y$10$XWY2hekXyFLsokyC890q1eBraubGXak2oW8myLJUQM.IfkxTso88O';
 $PizzaList = new ArrayObject();
 $IngredientsList = new ArrayObject();
 $Cart = [];
-$Pizza1 = new Pizza('recipe','Margarita','12,5',40,$PizzaList);
+$Orders=[];
+$Pizza1 = new Pizza('recipe','Margarita','12.5',40,$PizzaList);
 $Pizza1->addIngredient('tomate',$PizzaList);
 $Pizza1->addIngredient('radis',$PizzaList);
 $Pizza1->addIngredient('blabla',$PizzaList);
 $Pizza1->addIngredient('riz',$PizzaList);
 $Pizza1->addIngredient('nutella',$PizzaList);
-$Pizza2 = new Pizza('recipe','a','12,5',40,$PizzaList);
+$Pizza2 = new Pizza('recipe','a','12.5',40,$PizzaList);
 $Pizza2->addIngredient('tomate',$PizzaList);
 $Pizza2->addIngredient('radis',$PizzaList);
 $Pizza2->addIngredient('riz',$PizzaList);
@@ -88,7 +89,10 @@ switch($number){
                                            goto start;
                                            break;
                                        case 2:
-                                           echo "Thank you for your order\n";
+                                           $Orders[]=$Cart;
+                                           echo "Thank you for your order,you need to pay ".ListPizza::calcPriceCart($Cart)." when receiving your order\n";
+                                           $Cart=[];
+                                           goto start;
                                            break;
                                    }
                                    break;
@@ -119,6 +123,7 @@ switch($number){
                     echo("\nEnter 1 : -View orders\nEnter 2 : -View and edit pizzas\nEnter 3 : -View stocks\nEnter 4 : -Return to start\n\n");
                     switch (readline('Enter a number please :')){
                         case 1:
+                            ListPizza::viewOrders($Orders);
                             break;
                         case 2:
                             echo "There is the list ofs pizzas Recipes:\n\n";
@@ -161,7 +166,7 @@ switch($number){
                                 case 3:
                                     echo "Create a new Pizza ";
                                     $New_Pizza_Name = readline('Type the name of the new Pizza please :');
-                                    $New_Pizza_Price = readline('Type the price of the new Pizza please :');
+                                    $New_Pizza_Price = readline('Type the price of the new Pizza please (please use "." instead of "," :');
                                     $New_Pizza_Stock = readline('Type the stock of the new Pizza please :');
                                     $New_Pizza = new Pizza('recipe',$New_Pizza_Name,$New_Pizza_Price,$New_Pizza_Stock,$PizzaList);
                                     echo "\nYou must add at least 3 ingredients\n";
@@ -195,6 +200,10 @@ switch($number){
 //                                    ListPizza::ListPizzasNames($PizzaList);
                             }
                             break;
+                        case 3:
+                            echo "View stocks\n";
+                            ListPizza::ListPizzasStock($PizzaList);
+
                         case 4:
                             goto start;
                     }
