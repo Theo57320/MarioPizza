@@ -18,7 +18,7 @@ class ListPizza
     }
     public function ListPizzasStock($list){
         foreach ($list as $key => $val){
-            echo "".$key." ".$val['Stock']."\n";
+            echo "".$key." : ".$val['Stock']."\n";
         }
     }
 
